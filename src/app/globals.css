@@ -48,9 +48,10 @@ html.dark .border-slate-200:not(aside *) {
   border-color: #1E293B !important;
 }
 
+html.dark .text-slate-900:not(aside *),
 html.dark .text-slate-800:not(aside *),
 html.dark .text-slate-700:not(aside *) {
-  color: #F1F5F9 !important;
+  color: #F8FAFC !important;
 }
 
 html.dark .text-slate-600:not(aside *) {
