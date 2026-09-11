@@ -1,0 +1,132 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-green: #17D059;
+  --dark-blue: #074870;
+}
+
+/* ==========================================
+   BASE THEME — Body defaults
+   ========================================== */
+body {
+  font-family: var(--font-sans), 'Inter', Arial, Helvetica, sans-serif;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #030712;
+  color: #F8FAFC;
+}
+
+
+
+/* ==========================================
+   NIGHT MODE — Dark overrides for elements
+   that only have day-mode Tailwind classes
+   ========================================== */
+html.dark .bg-white:not(aside *) {
+  background-color: #0F172A !important;
+  border-color: #1E293B !important;
+}
+
+html.dark .bg-slate-50:not(aside *) {
+  background-color: #0B1222 !important;
+}
+
+html.dark .bg-slate-100:not(aside *) {
+  background-color: #0F172A !important;
+}
+
+html.dark .border-slate-100:not(aside *),
+html.dark .border-slate-200:not(aside *) {
+  border-color: #1E293B !important;
+}
+
+html.dark .text-slate-800:not(aside *),
+html.dark .text-slate-700:not(aside *) {
+  color: #F1F5F9 !important;
+}
+
+html.dark .text-slate-600:not(aside *) {
+  color: #CBD5E1 !important;
+}
+
+html.dark .text-slate-500:not(aside *) {
+  color: #94A3B8 !important;
+}
+
+html.dark .text-slate-400:not(aside *) {
+  color: #64748B !important;
+}
+
+html.dark .text-\[\#074870\]:not(aside *) {
+  color: #38BDF8 !important;
+}
+
+/* Night inputs fallback */
+html.dark input,
+html.dark select,
+html.dark textarea {
+  background-color: #0B1222 !important;
+  color: #F8FAFC !important;
+  border-color: #334155 !important;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #64748B !important;
+}
+
+/* Night table rows */
+html.dark .hover\:bg-slate-50:hover {
+  background-color: #1E293B !important;
+}
+
+/* ==========================================
+   UTILITIES
+   ========================================== */
+
+/* Number input arrows */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+.dark ::-webkit-scrollbar-track {
+  background: #030712;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #334155;
+}
+
+/* Confetti animation */
+@keyframes confetti-fall {
+  0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+.animate-confetti {
+  animation: confetti-fall 3s ease-in-out forwards;
+}

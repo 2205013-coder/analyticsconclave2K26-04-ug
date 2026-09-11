@@ -1,0 +1,392 @@
+﻿OPTI-X-GALAXY
+Full Codebase Audit Report
+74 Files Audited  ΓÇó  67+ Issues Found  ΓÇó  6 Critical Security Vulnerabilities
+Project: OPTI-X-GALAXY (Next.js Quiz Platform)Date: August 21, 2026Scope: Pages, Components, API Routes, Libraries, Configuration
+Table of Contents
+1. Executive Summary
+2. Critical Security Vulnerabilities
+3. Fatal Runtime Crash Bugs
+4. Scoring & Logic Bugs
+5. React / Hydration / Navigation Bugs
+6. Dead / Non-Functional Pages
+7. Database & Race Condition Issues
+8. Navbar & Navigation Issues
+9. Code Quality & Cleanup
+10. Summary Statistics
+11. Recommended Fix Priority
+1. Executive Summary
+A comprehensive audit was conducted on the OPTI-X-GALAXY codebase, a Next.js-based quiz and assessment platform. The audit covered 74 source files spanning pages, components, API routes, library utilities, database schema, and configuration files.
+ΓÜá  CAUTION: 6 critical security vulnerabilities, 4 fatal crash bugs, and 12 scoring/logic bugs were identified that require immediate attention.
+Category
+Count
+Description
+≡ƒö┤ Critical Security
+6
+Password hash leaks, quiz answer cheating, hardcoded credentials, insecure JWT
+≡ƒö┤ Fatal Crashes
+4
+Invalid Prisma fields, broken icon imports, TypeScript type errors
+≡ƒƒá Scoring / Logic
+12
+Negative marking bugs, leaderboard double-counting, numerical grading failures
+≡ƒƒá React / Navigation
+7
+SSR hydration mismatch, timer drift, false save confirmations
+≡ƒƒí Dead Pages
+5
+Admin analytics, exports, settings, leaderboard, results ΓÇö all non-functional
+≡ƒƒí Database / Race
+6
+Missing unique constraints, race conditions, cookie overwrites
+≡ƒƒí Navbar / Navigation
+7
+Missing user props, hardcoded back links, active state failures
+≡ƒö╡ Code Quality
+20+
+Unused imports, untyped state, error message leaks, build config issues
+2. Critical Security Vulnerabilities
+ΓÜá  These issues expose sensitive data and allow cheating. Must be fixed before any production deployment.
+#
+File
+Location
+Issue Description
+1
+src/app/api/admin/participants/[id]/route.ts
+Line 73
+PASSWORD HASH LEAKED ΓÇö Full Prisma User record (including passwordHash) returned in JSON response to admin panel
+2
+src/app/api/participant/profile/route.ts
+Line 130
+PASSWORD HASH LEAKED ΓÇö PUT response returns complete User model with passwordHash to the client
+3
+src/app/api/quiz/[stageId]/answer/route.ts
+Line 78
+QUIZ CHEATING ENABLED ΓÇö Returns isCorrect boolean to client during live quiz, enabling trial-and-error answer discovery
+4
+src/app/api/quiz/[stageId]/route.ts
+Line 89
+ANSWER KEY LEAKED ΓÇö GET returns full Response records with isCorrect and points fields; inspecting network reveals correct answers on page refresh
+5
+src/app/login/admin/page.tsx
+Lines 92, 102
+HARDCODED CREDENTIALS ΓÇö admin@optixgalaxy.com / Admin@123 set as defaultValue in production login form inputs
+6
+src/middleware.ts
+Line 5
+INSECURE JWT SECRET ΓÇö Uses hardcoded fallback 'opti-x-galaxy-secret-key-change-in-production' when JWT_SECRET env var is unset
+3. Fatal Runtime Crash Bugs
+These issues cause immediate server errors or build failures, making affected features completely non-functional.
+#
+File
+Location
+Issue Description
+1
+src/app/api/admin/analytics/route.ts
+Line 39
+PrismaClientValidationError ΓÇö orderBy: { sequence: 'asc' } references non-existent field on Stage model (correct field name is 'order'). Crashes on every request to admin analytics.
+2
+src/app/api/admin/audit-log/route.ts
+Lines 19ΓÇô21
+Invalid Prisma relation ΓÇö include: { user: {...} } but AuditLog model defines relations as 'actor' and 'target', not 'user'. Fatal error on every audit log query.
+3
+src/app/admin/monitor/page.tsx
+Line 5
+Non-existent Lucide icon ΓÇö Imports 'RadioReceiver' from lucide-react which does not exist in the package. Correct icon name is 'Radio'. Build/runtime crash.
+4
+src/app/login/participant/page.tsx
+Line 120
+TypeScript type error ΓÇö <Logo size="medium" /> but LogoProps type only accepts 'sm' | 'md' | 'lg' | 'xl'. Value 'medium' is not assignable.
+4. Scoring & Logic Bugs
+ΓÜá  These bugs directly affect score calculations, leaderboard rankings, and quiz fairness.
+#
+File
+Location
+Issue Description
+1
+src/lib/scoring.ts
+Lines 48ΓÇô63
+NEGATIVE MARKS ON SKIPPED QUESTIONS ΓÇö When selectedAnswer is '[]' (empty JSON array from cleared selection), !response.selectedAnswer evaluates to false. The response is treated as a wrong answer and negative marking penalty is applied to unattempted questions.
+2
+src/lib/scoring.ts
+Lines 120ΓÇô135
+LEADERBOARD DOUBLE-COUNTING ΓÇö When canRetake is enabled and a user attempts a stage multiple times, reduce() sums scores of ALL attempts (e.g. 50 + 60 = 110) instead of selecting highest or latest attempt per stage.
+3
+src/app/api/quiz/[stageId]/answer/route.ts
+Lines 36ΓÇô48
+NUMERICAL QUESTIONS ALWAYS CORRECT ΓÇö For numerical questions with no options, correctOptionIds is []. Empty array comparison (0 === 0) evaluates to true. No actual numerical answer grading logic exists.
+4
+src/app/api/quiz/[stageId]/submit/route.ts
+Lines 55, 66
+NUMERICAL ANSWERS DISCARDED ΓÇö The numericalAnswer field is completely omitted from update and create data objects during final submission, losing all numerical responses.
+5
+src/app/api/quiz/[stageId]/answer/route.ts
+Lines 59, 71
+ZERO ANSWER BUG ΓÇö numericalAnswer ? parseFloat(...) treats the number 0 as falsy, converting a legitimate answer of 0 to null.
+6
+src/app/api/admin/analytics/route.ts
+Lines 17, 28
+ZERO ANALYTICS DATA ΓÇö Queries for attempt status 'COMPLETED' but valid statuses in schema are 'SUBMITTED', 'TIMED_OUT', 'IN_PROGRESS'. All analytics metrics report 0 / empty.
+7
+src/app/api/participant/results/[stageId]/route.ts
+Line 54
+HARDCODED STAGE RANK ΓÇö stageRank: 1 is hardcoded for all participants regardless of actual performance ranking.
+8
+src/app/api/admin/stages/route.ts
+Line 64
+DURATION UNIT MISMATCH ΓÇö POST handler multiplies duration by 60 (data.duration * 60) assuming minutes input, while PUT handler treats duration as raw seconds. Inconsistent behavior.
+9
+src/app/api/admin/dashboard/route.ts
+Lines 31ΓÇô49
+KPI STATS CAPPED AT 20 ΓÇö completedUsers fetched with take: 20 limit. Completion rate, participation data all computed over just 20 users instead of full dataset.
+10
+src/app/api/participant/stages/route.ts
+Lines 19ΓÇô34
+UNLOCK RULES IGNORED ΓÇö Stage availability only checks sequential completion. MANUAL, SCORE_BASED, and SCHEDULED unlock rules are completely ignored.
+11
+src/app/api/quiz/[stageId]/route.ts
+Lines 50ΓÇô60
+GET CREATES ATTEMPT ΓÇö Navigating to quiz URL via GET request auto-creates an IN_PROGRESS attempt without explicit user confirmation, bypassing the POST /start endpoint.
+12
+src/components/landing/Stages.tsx
+Lines 9ΓÇô14
+Object.entries ON ARRAY ΓÇö STAGE_CONFIG is an array but Object.entries() is called on it, producing string indices ('0', '1') as IDs instead of stage.order values.
+5. React / Hydration / Navigation Bugs
+#
+File
+Location
+Issue Description
+1
+src/components/shared/GalaxyBackground.tsx
+Lines 50ΓÇô51
+SSR HYDRATION MISMATCH ΓÇö Math.random() is called during render for particle sizes. Server renders different values than client hydration, triggering React hydration errors in console.
+2
+src/app/quiz/[stageId]/page.tsx
+ΓÇö
+NO EXIT / BACK BUTTON ΓÇö Quiz arena has no way to leave or cancel. Participants are trapped on the page unless they submit or close the browser window.
+3
+src/app/quiz/[stageId]/page.tsx
+Lines 135ΓÇô147
+TIMER DRIFT ΓÇö Uses setInterval decrementing by 1 second. Drifts significantly when browser tab is inactive/throttled. No synchronization with server timestamp or Date.now().
+4
+src/app/quiz/[stageId]/page.tsx
+Lines 170ΓÇô182
+FALSE 'ANSWER SAVED' ΓÇö Auto-save fetch is fire-and-forget with .catch(console.error). UI shows green 'Answer Saved' confirmation regardless of whether HTTP request succeeded or failed.
+5
+src/app/api/quiz/[stageId]/route.ts
+Lines 63, 78
+QUESTIONS RESHUFFLE ON REFRESH ΓÇö shuffleArray() runs on every GET request, changing question and option order mid-quiz when the participant refreshes the page.
+6
+src/components/shared/SessionWatcher.tsx
+Lines 19ΓÇô38
+DELAYED SESSION CHECK ΓÇö verifySession only runs after first 30-second interval. Resets on every navigation, allowing up to 30 seconds of use after forced logout.
+7
+src/app/layout.tsx
+Line 33
+WHITE FLASH ΓÇö <body> element lacks default dark background color (e.g. bg-slate-950), causing white flash during page transitions before child backgrounds mount.
+6. Dead / Non-Functional Admin Pages
+These admin pages are either completely static with hardcoded mock data or have non-functional interactive elements.
+#
+File
+Location
+Issue Description
+1
+src/app/admin/analytics/page.tsx
+Entire file
+100% MOCK DATA ΓÇö Contains hardcoded chart data arrays (JanΓÇôJun participants, pieData). Never calls the existing /api/admin/analytics endpoint. No useState, useEffect, loading states, or error handling.
+2
+src/app/admin/leaderboard/page.tsx
+Entire file
+100% MOCK DATA ΓÇö Contains hardcoded fake participants ('Alex Johnson - MIT', 'Sarah Williams - Stanford'). Completely disconnected from database. No API calls, search, or pagination.
+3
+src/app/admin/exports/page.tsx
+Lines 27ΓÇô29
+DEAD BUTTONS ΓÇö All 5 export download buttons render without onClick handlers. Clicking does nothing. Icon mapping in array is also ignored; all cards show Download icon.
+4
+src/app/admin/settings/page.tsx
+Entire file
+ENTIRELY INERT ΓÇö No state management, no data fetching, no event handlers. Save Configuration and Cancel buttons have no onClick. Does not call GET or PUT /api/admin/settings.
+5
+src/app/admin/results/page.tsx
+Lines 12ΓÇô24
+WRONG API ENDPOINT ΓÇö fetchResults() calls /api/admin/participants instead of a results endpoint. Shows participant list instead of detailed stage score breakdowns.
+7. Database & Race Condition Issues
+#
+File
+Location
+Issue Description
+1
+prisma/schema.prisma
+Response model
+Missing @@unique([attemptId, questionId]) ΓÇö Allows concurrent auto-saves or submissions to create duplicate Response records for the same question within an attempt.
+2
+prisma/schema.prisma
+Attempt model
+Missing compound constraint on (userId, stageId, status) ΓÇö Concurrent requests to start a quiz can create duplicate IN_PROGRESS attempts for the same stage.
+3
+src/app/api/admin/questions/[id]/route.ts
+Lines 35ΓÇô55
+NON-TRANSACTIONAL OPTION DELETION ΓÇö prisma.option.deleteMany runs before prisma.question.update without $transaction. If update fails, old options are permanently lost. Also invalidates option IDs in historical Response.selectedAnswer records.
+4
+src/app/api/auth/register/route.ts
+Lines 36ΓÇô41
+PARTICIPANT ID COLLISION RISK ΓÇö generateParticipantId() produces IDs P1000ΓÇôP9999 (only 9000 possible). Race-prone TOCTOU check with while loop can cause UniqueConstraintViolation under concurrent registrations.
+5
+src/app/api/auth/login/route.ts
+Lines 68ΓÇô74
+COOKIE EXPIRATION OVERWRITE ΓÇö createSession sets 1-hour cookie for participants, but login route overrides with hardcoded maxAge: 60 * 60 * 24 (24 hours).
+6
+src/lib/auth.ts
+Line 116
+SQLITE WRITE CONTENTION ΓÇö lastActivity UPDATE executes on every getSession() call (every API request + 30s poller). Causes SQLITE_BUSY errors under concurrent participants.
+8. Navbar & Navigation Issues
+#
+File
+Location
+Issue Description
+1
+src/app/leaderboard/page.tsx
+Line 80
+Navbar missing user prop ΓÇö Shows guest state ("Enter the Galaxy") on authenticated leaderboard page
+2
+src/app/completion/page.tsx
+Line 50
+Navbar missing user prop ΓÇö Shows guest navigation on final completion screen
+3
+src/app/results/[stageId]/page.tsx
+Line 80
+Navbar missing user prop ΓÇö Shows guest navigation on results page
+4
+src/components/shared/Navbar.tsx
+Lines 96, 182
+Landing nav links never active ΓÇö pathname === '/#about' always false since pathname is just '/'
+5
+src/components/shared/Navbar.tsx
+Line 205
+Conflicting CSS classes ΓÇö both 'block' and 'flex' display rules applied to the same element
+6
+Multiple login pages
+Various
+Hardcoded back navigation ΓÇö Uses <Link href="/"> instead of router.back() or history-aware navigation. Redirected users always go to / instead of previous page.
+7
+src/app/admin/stages/page.tsx
+ΓÇö
+canRetake always undefined ΓÇö GET /api/admin/stages omits canRetake field from response, so UI always shows 'Restricted (Admin Only)' regardless of actual setting.
+9. Code Quality & Cleanup
+9.1 Unused Imports
+File
+Location
+Unused Imports
+src/components/landing/About.tsx
+Line 6
+Layers, BarChart3
+src/components/landing/CTA.tsx
+Line 6
+cn (from @/lib/utils)
+src/components/landing/Hero.tsx
+Line 5ΓÇô6
+ShieldCheck, cn
+src/components/landing/Stages.tsx
+Line 4, 6
+cn, Sparkles
+src/app/admin/monitor/page.tsx
+Lines 7ΓÇô8
+Clock, Play, formatTimeLong
+src/app/admin/participants/page.tsx
+Line 10
+formatTimeLong
+src/app/admin/participants/[id]/page.tsx
+Lines 7ΓÇô10
+Star, Target, Clock, Sparkles, Check, AlertTriangle
+src/app/admin/settings/page.tsx
+Line 3
+useState
+4 export route files
+Line 1
+NextResponse (unused, uses raw Response)
+9.2 Other Quality Issues
+File
+Location
+Issue
+src/components/landing/Footer.tsx
+Line 1
+Unnecessary 'use client' directive ΓÇö no hooks or browser APIs used
+src/components/shared/Logo.tsx
+Line 11
+showKsom prop defined in TypeScript interface but never destructured or used in component
+src/components/shared/CustomCursor.tsx
+Lines 25ΓÇô77
+isVisible in useEffect dependencies causes all 6 event listeners to detach/reattach on every mouse enter/leave
+src/lib/utils.ts
+Line 52
+getRelativeTime() crashes on ISO string inputs ΓÇö expects Date object but API responses send strings
+src/lib/utils.ts
+Lines 15ΓÇô27
+formatTime() / formatTimeLong() don't handle floating-point seconds or negative values
+src/lib/csv.ts
+Lines 5ΓÇô12
+No CSV formula injection protection ΓÇö values starting with =, +, -, @ can execute formulas in spreadsheets
+src/types/index.ts
+Lines 50ΓÇô60
+LeaderboardEntry interface missing totalCorrect and totalQuestions fields returned by getLeaderboard()
+src/app/dashboard/page.tsx
+Line 36
+useState<any>(null) ΓÇö untyped user state disables TypeScript safety
+next.config.mjs
+Lines 3ΓÇô8
+ESLint and TypeScript build checks disabled (ignoreDuringBuilds: true, ignoreBuildErrors: true)
+Multiple admin API routes
+Various
+Return 401 Unauthorized instead of 403 Forbidden for authenticated non-admin users
+Multiple API routes
+Various
+Error responses leak error.message internals to clients (information disclosure)
+10. Summary Statistics
+Metric
+Value
+Total Files Audited
+74
+Total Issues Found
+67+
+Critical Security Vulnerabilities
+6
+Fatal Runtime Crashes
+4
+Scoring / Logic Bugs
+12
+React / Navigation Bugs
+7
+Dead / Non-Functional Pages
+5
+Database / Race Conditions
+6
+Navbar / Navigation Issues
+7
+Code Quality Issues
+20+
+Files audited by category:
+  ΓÇó  Page / Layout Files: 24 files
+  ΓÇó  API Route Files: 29 files
+  ΓÇó  Component Files: 14 files
+  ΓÇó  Library / Type Files: 7 files
+  ΓÇó  Configuration Files: 4 files (next.config, tailwind, tsconfig, package.json)
+  ΓÇó  Database Schema: 1 file (prisma/schema.prisma)
+11. Recommended Fix Priority
+Priority
+Items
+Rationale
+P0 ΓÇö Immediate
+Security: Password hash leaks (2 API routes)Security: Quiz answer/correctness leaks (2 API routes)Security: Remove hardcoded admin credentialsSecurity: Enforce JWT_SECRET requirement
+Blocks production deployment
+P0 ΓÇö Immediate
+Fatal Crashes: Fix Prisma field 'sequence' ΓåÆ 'order'Fatal Crashes: Fix Prisma relation 'user' ΓåÆ 'actor'Fatal Crashes: Fix RadioReceiver ΓåÆ Radio iconFatal Crashes: Fix Logo size='medium' ΓåÆ 'md'
+Features completely broken
+P1 ΓÇö High
+Scoring: Fix negative marking on skipped questionsScoring: Deduplicate retake attempts in leaderboardScoring: Implement numerical question gradingScoring: Fix zero-answer coercion bug
+Data integrity / fairness
+P2 ΓÇö Medium
+Implement 5 dead admin pages (analytics, exports, settings, leaderboard, results)Fix Navbar user prop on authenticated pagesAdd quiz exit button with confirmationFix SSR hydration mismatchFix session watcher timing
+Feature completeness / UX
+P3 ΓÇö Low
+Remove unused imports across 9+ filesFix untyped state variablesSanitize error messages in API responsesFix CSS conflicts and utility issuesAdd CSV formula injection protection
+Code quality / maintenance
+ΓÇö End of Audit Report ΓÇö

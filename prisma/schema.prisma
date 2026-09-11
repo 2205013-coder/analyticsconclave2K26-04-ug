@@ -1,0 +1,146 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String    @id @default(cuid())
+  name         String
+  email        String    @unique
+  passwordHash String
+  role         String    @default("ADMIN")
+  isActive     Boolean   @default(true)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  sessions     Session[]
+}
+
+model Session {
+  id           String    @id @default(cuid())
+  userId       String
+  tokenHash    String    @unique
+  expiresAt    DateTime
+  isActive     Boolean   @default(true)
+  createdAt    DateTime  @default(now())
+  lastActivity DateTime  @default(now())
+  revokedAt    DateTime?
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Team {
+  id              String       @id @default(cuid())
+  name            String
+  teamCode        String       @unique
+  pin             String
+  rawPin          String?
+  leaderName      String?
+  email           String?
+  phone           String?
+  institution     String?
+  department      String?
+  year            String?
+  isActive        Boolean      @default(true)
+  activeSessionId String?
+  lastActiveAt    DateTime?
+  currentRound    Int          @default(1)
+  roundStartedAt  DateTime?
+  totalScore      Int          @default(0)
+  status          String       @default("active")
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  submissions     Submission[]
+}
+
+model TrainingMatch {
+  id              Int    @id @default(autoincrement())
+  matchId         String @unique
+  year            Int
+  month           Int
+  artistAct       String
+  genre           String
+  venueType       String
+  promotionLevel  Int
+  venuePrestige   Int
+  weather         String
+  concertDay      String
+  competingEvents String
+  actualGa        Int
+  actualVip       Int
+}
+
+model GameRound {
+  id              Int    @id @default(autoincrement())
+  roundNumber     Int    @unique
+  title           String
+  theme           String
+  artistAct       String
+  genre           String
+  venueType       String
+  promotionLevel  Int
+  venuePrestige   Int
+  weather         String
+  concertDay      String
+  competingEvents String
+  instructions    String @default("")
+  actualGa        Int
+  actualVip       Int
+  status          String @default("ready")
+  timerSeconds    Int    @default(180)
+}
+
+model Submission {
+  id           String    @id @default(cuid())
+  teamId       String
+  roundNumber  Int
+  predictedGa  Int
+  predictedVip Int
+  reasoning    String    @default("")
+  actualGa     Int?
+  actualVip    Int?
+  gaError      Float?
+  vipError     Float?
+  accuracy     Float?
+  score        Int?
+  submittedAt  DateTime  @default(now())
+  team         Team      @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  @@unique([teamId, roundNumber])
+}
+
+model ScoringConfig {
+  id                   Int     @id @default(autoincrement())
+  gaWeight             Float   @default(0.6)
+  vipWeight            Float   @default(0.4)
+  maxRoundScore        Int     @default(1000)
+  underForecastPenalty Float   @default(1.0)
+  overForecastPenalty  Float   @default(1.0)
+  active               Boolean @default(true)
+}
+
+model GameControl {
+  id                  Int     @id @default(autoincrement())
+  gameStatus          String  @default("active")
+  timerEnabled        Boolean @default(true)
+  leaderboardEnabled  Boolean @default(false)
+  activeRound         Int     @default(1)
+}
+
+model Announcement {
+  id        String   @id @default(cuid())
+  title     String
+  message   String
+  urgency   String   @default("INFO")
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  teamId    String?
+  action    String
+  details   String?
+  timestamp DateTime @default(now())
+}
