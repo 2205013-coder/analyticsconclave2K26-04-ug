@@ -116,16 +116,16 @@ function BriefingContent() {
   return (
     <div className="bg-[#030712] text-white pb-28">
 
-      {/* ── Compact Hero strip ──────────────────────────────── */}
-      <div className="relative overflow-hidden border-b border-slate-800 bg-gradient-to-r from-[#030712] via-[#06111F] to-[#030712] py-4 px-6 text-center">
-        <div className="relative z-10 max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#17D059]/10 border border-[#17D059]/30 text-[#17D059] text-[10px] font-mono font-bold uppercase tracking-widest mb-2">
+      {/* ── Hero strip ──────────────────────────────── */}
+      <div className="relative overflow-hidden border-b border-slate-800 bg-gradient-to-r from-[#030712] via-[#06111F] to-[#030712] py-8 px-6 text-center">
+        <div className="relative z-10 max-w-4xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#17D059]/10 border border-[#17D059]/30 text-[#17D059] text-xs font-mono font-bold uppercase tracking-widest mb-3">
             UG Business Analytics Game 2026
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black mb-1 bg-gradient-to-r from-white via-slate-100 to-slate-300 bg-clip-text text-transparent">
+          <h1 className="text-3xl sm:text-4xl font-black mb-2 bg-gradient-to-r from-white via-slate-100 to-slate-300 bg-clip-text text-transparent">
             War Room Briefing
           </h1>
-          <p className="text-slate-400 text-sm max-w-xl mx-auto">
+          <p className="text-slate-400 text-base max-w-xl mx-auto">
             Study the case, analyse 60 historical events, and download the data.
           </p>
         </div>
@@ -141,24 +141,24 @@ function BriefingContent() {
             <button
               key={id}
               onClick={() => setActiveTab(id)}
-              className={`flex-1 flex items-center justify-center gap-2 py-3.5 text-sm font-bold border-b-2 -mb-[2px] transition-all whitespace-nowrap ${
+              className={`flex-1 flex items-center justify-center gap-2.5 py-4 text-base font-bold border-b-2 -mb-[2px] transition-all whitespace-nowrap ${
                 activeTab === id
                   ? 'border-[#17D059] text-[#17D059]'
                   : 'border-transparent text-slate-400 hover:text-white hover:border-slate-600'
               }`}
             >
-              <Icon size={15} />
+              <Icon size={18} />
               {label}
             </button>
           ))}
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 py-8 pb-32">
+      <div className="max-w-6xl mx-auto px-6 py-10 pb-32">
 
         {/* ═══════════════ CASE STUDY ═══════════════ */}
         {activeTab === 'study' && (
-          <div className="space-y-6 max-w-5xl mx-auto">
+          <div className="space-y-6">
 
             <Section title="📋 Business Scenario">
               <p className="mb-3">
