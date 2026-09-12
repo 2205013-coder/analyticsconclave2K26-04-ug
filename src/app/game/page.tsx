@@ -98,13 +98,13 @@ export default function GamePage() {
           } else {
             clearTimerFromStorage();
             await fetchRoundData(round, null);
-            setPhase('prep');
+            await autoStartRound(round);
           }
         } else {
-          // No timer running at all — fresh prep
+          // No timer running at all — auto-start the round
           clearTimerFromStorage();
           await fetchRoundData(round, null);
-          setPhase('prep');
+          await autoStartRound(round);
         }
       } catch (err) {
         console.error(err);
@@ -175,6 +175,32 @@ export default function GamePage() {
   };
 
   const [startingTimer, setStartingTimer] = useState(false);
+
+  // Auto-start a round timer without user clicking "Enter Round"
+  const autoStartRound = async (round: number) => {
+    try {
+      const res = await fetch('/api/game/start-round', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ roundNumber: round }),
+      });
+      if (!res.ok) {
+        // If server refuses (e.g. round already started), fall back to prep
+        setPhase('prep');
+        return;
+      }
+      const data = await res.json();
+      const duration = data.duration ?? 600;
+      const remaining = data.remaining ?? duration;
+      const startedAt = Date.now() - ((duration - remaining) * 1000);
+      saveTimerToStorage(round, startedAt, duration);
+      setTimeLeft(remaining);
+      setPhase('playing');
+    } catch {
+      // On network error, fall back to prep phase
+      setPhase('prep');
+    }
+  };
 
   const handleStartPlaying = async () => {
     setStartingTimer(true);
@@ -294,7 +320,7 @@ export default function GamePage() {
         setRoundNumber(next);
         clearTimerFromStorage();
         await fetchRoundData(next, null);
-        setPhase('prep');
+        await autoStartRound(next);
       }, 1800);
     } catch {
       // Fallback to client increment if status fetch fails
@@ -306,7 +332,7 @@ export default function GamePage() {
         setRoundNumber(next);
         clearTimerFromStorage();
         await fetchRoundData(next, null);
-        setPhase('prep');
+        await autoStartRound(next);
       }, 1800);
     }
   };
