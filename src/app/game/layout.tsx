@@ -68,9 +68,15 @@ export default function GameLayout({ children }: { children: React.ReactNode }) 
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="px-3 py-1 rounded-lg bg-[#17D059]/10 border border-[#17D059]/30 text-xs font-bold text-[#17D059] font-mono">
-            ROUND {round} / 6
-          </div>
+          {round > 6 ? (
+            <div className="px-3 py-1 rounded-lg bg-emerald-950/50 border border-emerald-700/50 text-xs font-bold text-emerald-400 font-mono">
+              ✓ COMPLETED
+            </div>
+          ) : (
+            <div className="px-3 py-1 rounded-lg bg-[#17D059]/10 border border-[#17D059]/30 text-xs font-bold text-[#17D059] font-mono">
+              ROUND {round} / 6
+            </div>
+          )}
           <button
             onClick={() => window.open('/game/briefing?ref=game', '_blank')}
             className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300 hover:text-white transition-colors border border-slate-700 cursor-pointer flex items-center gap-1.5"
