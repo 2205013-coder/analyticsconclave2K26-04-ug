@@ -233,7 +233,11 @@ export default function TeamsPage() {
                     {team.institution || '-'}
                   </td>
                   <td className="px-6 py-4 text-center font-medium text-white">
-                    {team.currentRound}
+                    {team.currentRound > 6 ? (
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold bg-emerald-950/50 border border-emerald-700/50 text-emerald-400">
+                        ✓ Done
+                      </span>
+                    ) : team.currentRound}
                   </td>
                   <td className="px-6 py-4 text-center font-bold text-[#38bdf8]">
                     {Math.round(team.totalScore)}
