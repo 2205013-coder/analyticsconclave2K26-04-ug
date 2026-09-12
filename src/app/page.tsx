@@ -15,6 +15,7 @@ export default function LandingPage() {
   const [pin, setPin] = useState('');
   const [error, setError] = useState('');
   const [sessionConflict, setSessionConflict] = useState(false);
+  const [gameCompleted, setGameCompleted] = useState(false);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -30,6 +31,11 @@ export default function LandingPage() {
       });
       const data = await res.json();
       if (!res.ok) {
+        if (data.code === 'GAME_COMPLETED') {
+          setGameCompleted(true);
+          setLoading(false);
+          return;
+        }
         if (data.code === 'SESSION_CONFLICT') {
           setSessionConflict(true);
           setError('This team is already logged in on another device.');
@@ -45,6 +51,43 @@ export default function LandingPage() {
       setLoading(false);
     }
   };
+
+  if (gameCompleted) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[#030712] text-white px-6">
+        <div className="fixed inset-0 z-0 pointer-events-none">
+          <div className="absolute top-[-15%] left-[-10%] w-[55%] h-[55%] rounded-full bg-[#17D059]/8 blur-[140px]" />
+          <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-[#074870]/15 blur-[160px]" />
+        </div>
+        <div className="relative z-10 flex flex-col items-center text-center max-w-lg">
+          <div className="text-8xl mb-6">🏆</div>
+          <div className="px-4 py-1.5 rounded-full bg-[#17D059]/10 border border-[#17D059]/30 text-[#17D059] text-xs font-mono font-bold uppercase tracking-widest mb-5">
+            All 6 Rounds Complete
+          </div>
+          <h1 className="text-4xl sm:text-5xl font-black mb-4">
+            Thank You for <span className="text-[#17D059]">Participating!</span>
+          </h1>
+          <p className="text-slate-400 text-lg mb-2">
+            Your team has successfully completed all 6 rounds of <strong className="text-white">Beyond The Stage</strong>.
+          </p>
+          <p className="text-[#38bdf8] font-semibold mb-8">
+            Results will be announced by the Game Master.
+          </p>
+          <div className="flex gap-1.5 mb-10">
+            {[1,2,3,4,5,6].map(r => (
+              <div key={r} className="w-10 h-2 rounded-full bg-[#17D059]" />
+            ))}
+          </div>
+          <button
+            onClick={() => setGameCompleted(false)}
+            className="text-sm text-slate-500 hover:text-slate-300 transition-colors"
+          >
+            ← Back to Home
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col bg-[#030712] text-white overflow-x-hidden">

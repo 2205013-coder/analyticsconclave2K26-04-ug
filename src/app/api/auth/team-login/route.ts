@@ -31,6 +31,14 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Incorrect passcode. Please try again.' }, { status: 401 });
     }
 
+    // Block login if team has completed all rounds
+    if (team.status === 'completed' || team.currentRound > 6) {
+      return NextResponse.json({
+        error: 'Your team has already completed all 6 rounds. Thank you for participating!',
+        code: 'GAME_COMPLETED',
+      }, { status: 403 });
+    }
+
     // Session conflict check
     if (team.activeSessionId && !forceLogin) {
       const twoHoursAgo = new Date(Date.now() - 2 * 60 * 60 * 1000);
