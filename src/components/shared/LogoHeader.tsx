@@ -4,16 +4,29 @@ export default function LogoHeader() {
   return (
     <div className="w-full bg-[#030712] border-b border-slate-700/50 py-3 px-6 flex items-center justify-between relative">
       
-      {/* KIIT Logo — left, no white background just the image */}
-      <div className="flex items-center gap-3">
-        <Image
-          src="/kiit-logo.jpg"
-          alt="KIIT School of Management"
-          width={200}
-          height={60}
-          className="object-contain h-12 w-auto rounded"
-          style={{ background: 'transparent' }}
-        />
+      {/* Left: KIIT School of Management & Analytics Konclave Logos */}
+      <div className="flex items-center gap-3 sm:gap-4">
+        <div className="bg-white rounded p-1 flex items-center justify-center shadow-sm">
+          <Image
+            src="/kiit-logo.jpg"
+            alt="KIIT School of Management"
+            width={180}
+            height={48}
+            className="object-contain h-9 sm:h-10 w-auto"
+          />
+        </div>
+
+        <div className="h-8 w-[1.5px] bg-slate-600/80"></div>
+
+        <div className="bg-white rounded p-1 flex items-center justify-center shadow-sm">
+          <Image
+            src="/analytics-konclave-logo.png"
+            alt="Analytics Konclave"
+            width={140}
+            height={48}
+            className="object-contain h-9 sm:h-10 w-auto"
+          />
+        </div>
       </div>
 
       {/* Game title — center */}
