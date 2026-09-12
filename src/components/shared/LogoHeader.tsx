@@ -5,26 +5,28 @@ export default function LogoHeader() {
     <div className="w-full bg-[#030712] border-b border-slate-700/50 py-3 px-6 flex items-center justify-between relative">
       
       {/* Left: KIIT School of Management & Analytics Konclave Logos */}
-      <div className="flex items-center gap-3 sm:gap-4">
-        <div className="bg-white rounded p-1 flex items-center justify-center shadow-sm">
+      <div className="flex items-center gap-3 sm:gap-3.5">
+        <div className="bg-white rounded px-2 py-1 flex items-center justify-center shadow-sm h-11 sm:h-12">
           <Image
             src="/kiit-logo.jpg"
             alt="KIIT School of Management"
-            width={180}
-            height={48}
-            className="object-contain h-9 sm:h-10 w-auto"
+            width={190}
+            height={50}
+            className="object-contain h-full w-auto"
+            priority
           />
         </div>
 
-        <div className="h-8 w-[1.5px] bg-slate-600/80"></div>
+        <div className="h-8 w-[1.5px] bg-slate-600/80 shrink-0"></div>
 
-        <div className="bg-white rounded p-1 flex items-center justify-center shadow-sm">
+        <div className="bg-white rounded px-2.5 py-1 flex items-center justify-center shadow-sm h-11 sm:h-12">
           <Image
             src="/analytics-konclave-logo.png"
             alt="Analytics Konclave"
-            width={140}
-            height={48}
-            className="object-contain h-9 sm:h-10 w-auto"
+            width={180}
+            height={50}
+            className="object-contain h-full w-auto"
+            priority
           />
         </div>
       </div>
