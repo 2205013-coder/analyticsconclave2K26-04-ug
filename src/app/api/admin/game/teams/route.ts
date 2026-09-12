@@ -118,6 +118,14 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: true });
     }
 
+    if (action === 'deleteAll') {
+      await prisma.$transaction([
+        prisma.submission.deleteMany(),
+        prisma.team.deleteMany(),
+      ]);
+      return NextResponse.json({ success: true });
+    }
+
     return NextResponse.json({ error: 'Invalid action' }, { status: 400 });
   } catch (error) {
     console.error('Teams action error:', error);

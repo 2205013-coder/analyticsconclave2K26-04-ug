@@ -100,6 +100,15 @@ export default function TeamsPage() {
     } catch (e) {}
   };
 
+  const handleDeleteAll = async () => {
+    if (!confirm('⚠️ Delete ALL teams and their submissions? This cannot be undone!')) return;
+    if (!confirm('Are you absolutely sure? This will permanently remove every team and all submission data.')) return;
+    try {
+      await handleAction('deleteAll', {});
+      fetchTeams();
+    } catch (e) {}
+  };
+
   const filteredTeams = teams.filter(t => 
     t.name?.toLowerCase().includes(search.toLowerCase()) || 
     t.teamCode?.toLowerCase().includes(search.toLowerCase())
@@ -117,12 +126,15 @@ export default function TeamsPage() {
           <p className="text-slate-600 dark:text-slate-400">Manage all participating teams and access codes.</p>
         </div>
         
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-wrap">
           <button onClick={() => window.open('/api/admin/game/export/teams', '_blank')} className="px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors flex items-center gap-2 text-sm font-medium">
             <Download size={16} /> Teams CSV
           </button>
           <button onClick={() => window.open('/api/admin/game/export/submissions', '_blank')} className="px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors flex items-center gap-2 text-sm font-medium">
             <Download size={16} /> Submissions CSV
+          </button>
+          <button onClick={handleDeleteAll} className="px-4 py-2 bg-red-900/30 hover:bg-red-900/50 border border-red-800/50 text-red-400 rounded-lg transition-colors flex items-center gap-2 text-sm font-medium">
+            <Trash2 size={16} /> Delete All Teams
           </button>
           <button onClick={() => {setBulkResult(null); setShowBulkModal(true);}} className="px-4 py-2 bg-[#074870] hover:bg-[#06385a] text-white rounded-lg transition-colors flex items-center gap-2 text-sm font-medium">
             <Users size={16} /> Bulk Generate
