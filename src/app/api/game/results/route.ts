@@ -11,7 +11,7 @@ export async function GET() {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    if (team.status !== 'completed') {
+    if (team.status !== 'completed' && team.currentRound <= 6) {
       return NextResponse.json({ error: 'Results not yet available' }, { status: 403 });
     }
 

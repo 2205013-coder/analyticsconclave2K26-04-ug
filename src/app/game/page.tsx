@@ -56,7 +56,7 @@ export default function GamePage() {
         const data = await res.json();
 
         if (data.status === 'completed' || data.currentRound > 6) {
-          router.push('/game/results');
+          setPhase('completed');
           return;
         }
 
@@ -274,7 +274,7 @@ export default function GamePage() {
 
   const handleNextRound = async () => {
     if (roundNumber >= 6) {
-      router.push('/game/results');
+      setPhase('completed');
       return;
     }
     // Ask server for the authoritative current round to avoid client/server mismatch
@@ -284,7 +284,7 @@ export default function GamePage() {
       const serverRound = data.currentRound || roundNumber;
       const next = serverRound; // server already incremented on submit
       if (next > 6) {
-        router.push('/game/results');
+        setPhase('completed');
         return;
       }
       setNextRoundNumber(next);
@@ -339,6 +339,42 @@ export default function GamePage() {
             }`} />
           ))}
         </div>
+      </div>
+    );
+  }
+
+  if (phase === 'completed') {
+    const handleReturnHome = async () => {
+      await fetch('/api/auth/team-logout', { method: 'POST' });
+      router.push('/');
+    };
+
+    return (
+      <div className="flex flex-col justify-center items-center h-[70vh] text-center px-6">
+        <div className="text-7xl mb-6">🏆</div>
+        <div className="px-4 py-1.5 rounded-full bg-[#17D059]/10 border border-[#17D059]/30 text-[#17D059] text-xs font-mono font-bold uppercase tracking-widest mb-4">
+          All 6 Rounds Complete
+        </div>
+        <h2 className="text-4xl sm:text-5xl font-black text-white mb-3">
+          Thank You for <span className="text-[#17D059]">Participating!</span>
+        </h2>
+        <p className="text-slate-400 text-lg max-w-lg mb-2">
+          You have successfully completed all 6 rounds of <strong className="text-white">Beyond The Stage</strong>.
+        </p>
+        <p className="text-[#38bdf8] font-semibold mb-8">
+          Your results will be announced by the Game Master.
+        </p>
+        <div className="flex gap-1.5 mb-8">
+          {[1,2,3,4,5,6].map(r => (
+            <div key={r} className="w-10 h-2 rounded-full bg-[#17D059]" />
+          ))}
+        </div>
+        <button
+          onClick={handleReturnHome}
+          className="flex items-center gap-3 px-8 py-4 bg-slate-800 hover:bg-slate-700 text-white rounded-full font-bold text-lg transition-colors border border-slate-700"
+        >
+          🏠 Return to Home
+        </button>
       </div>
     );
   }
