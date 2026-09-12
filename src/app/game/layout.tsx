@@ -68,6 +68,13 @@ export default function GameLayout({ children }: { children: React.ReactNode }) 
         </div>
 
         <div className="flex items-center gap-3">
+          <button
+            onClick={() => window.open('/game/briefing?ref=game', '_blank')}
+            className="px-5 py-2.5 rounded-xl bg-[#17D059]/10 hover:bg-[#17D059]/20 text-sm font-black text-[#17D059] hover:text-white transition-colors border border-[#17D059]/40 cursor-pointer flex items-center gap-2 shadow-lg shadow-[#17D059]/10"
+            title="Open Case Study & Historical Data in a new tab"
+          >
+            📋 Briefing <ExternalLink size={14} className="text-[#17D059]/60" />
+          </button>
           {round > 6 ? (
             <div className="px-3 py-1 rounded-lg bg-emerald-950/50 border border-emerald-700/50 text-xs font-bold text-emerald-400 font-mono">
               ✓ COMPLETED
@@ -77,13 +84,6 @@ export default function GameLayout({ children }: { children: React.ReactNode }) 
               ROUND {round} / 6
             </div>
           )}
-          <button
-            onClick={() => window.open('/game/briefing?ref=game', '_blank')}
-            className="px-5 py-2.5 rounded-xl bg-[#17D059]/10 hover:bg-[#17D059]/20 text-sm font-black text-[#17D059] hover:text-white transition-colors border border-[#17D059]/40 cursor-pointer flex items-center gap-2 shadow-lg shadow-[#17D059]/10"
-            title="Open Case Study & Historical Data in a new tab"
-          >
-            📋 Briefing <ExternalLink size={14} className="text-[#17D059]/60" />
-          </button>
           <button
             onClick={handleLogout}
             className="p-2 rounded-lg text-slate-500 hover:text-red-400 hover:bg-red-950/30 transition-colors cursor-pointer"
