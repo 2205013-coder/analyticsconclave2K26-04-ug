@@ -18,15 +18,15 @@ function Section({ title, children, defaultOpen = true }: {
 }) {
   const [open, setOpen] = useState(defaultOpen);
   return (
-    <div className="rounded-xl border border-slate-700 overflow-hidden bg-[#0B1222]">
+    <div className="rounded-2xl border border-slate-700 overflow-hidden bg-[#0B1222]">
       <button
         onClick={() => setOpen(o => !o)}
-        className="w-full flex items-center justify-between px-6 py-4 hover:bg-slate-800/40 transition-colors text-left"
+        className="w-full flex items-center justify-between px-8 py-5 hover:bg-slate-800/40 transition-colors text-left"
       >
-        <span className="font-bold text-white text-base">{title}</span>
-        {open ? <ChevronUp size={16} className="text-slate-400" /> : <ChevronDown size={16} className="text-slate-400" />}
+        <span className="font-bold text-white text-lg">{title}</span>
+        {open ? <ChevronUp size={18} className="text-slate-400" /> : <ChevronDown size={18} className="text-slate-400" />}
       </button>
-      {open && <div className="px-6 pb-5 text-slate-300 text-[15px] leading-relaxed">{children}</div>}
+      {open && <div className="px-8 pb-6 text-slate-300 text-base leading-7">{children}</div>}
     </div>
   );
 }
@@ -158,7 +158,7 @@ function BriefingContent() {
 
         {/* ═══════════════ CASE STUDY ═══════════════ */}
         {activeTab === 'study' && (
-          <div className="space-y-5 max-w-4xl mx-auto">
+          <div className="space-y-6 max-w-5xl mx-auto">
 
             <Section title="📋 Business Scenario">
               <p className="mb-3">
