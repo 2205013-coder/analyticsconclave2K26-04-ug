@@ -21,12 +21,12 @@ function Section({ title, children, defaultOpen = true }: {
     <div className="rounded-xl border border-slate-700 overflow-hidden bg-[#0B1222]">
       <button
         onClick={() => setOpen(o => !o)}
-        className="w-full flex items-center justify-between px-5 py-3 hover:bg-slate-800/40 transition-colors text-left"
+        className="w-full flex items-center justify-between px-6 py-4 hover:bg-slate-800/40 transition-colors text-left"
       >
-        <span className="font-bold text-white text-sm">{title}</span>
-        {open ? <ChevronUp size={14} className="text-slate-400" /> : <ChevronDown size={14} className="text-slate-400" />}
+        <span className="font-bold text-white text-base">{title}</span>
+        {open ? <ChevronUp size={16} className="text-slate-400" /> : <ChevronDown size={16} className="text-slate-400" />}
       </button>
-      {open && <div className="px-5 pb-4 text-slate-300 text-sm leading-relaxed">{children}</div>}
+      {open && <div className="px-6 pb-5 text-slate-300 text-[15px] leading-relaxed">{children}</div>}
     </div>
   );
 }
@@ -158,7 +158,7 @@ function BriefingContent() {
 
         {/* ═══════════════ CASE STUDY ═══════════════ */}
         {activeTab === 'study' && (
-          <div className="space-y-4 max-w-3xl mx-auto">
+          <div className="space-y-5 max-w-4xl mx-auto">
 
             <Section title="📋 Business Scenario">
               <p className="mb-3">
@@ -479,14 +479,24 @@ function BriefingContent() {
         <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-slate-800 bg-[#030712]/95 backdrop-blur-md">
           <div className="max-w-6xl mx-auto flex items-center justify-between gap-4 px-6 py-4">
             <div className="text-sm text-slate-400 hidden sm:block">
-              <span className="text-white font-bold">Ready?</span> Enter the game room to start your 10-minute timer.
+              {currentRound > 6 ? (
+                <><span className="text-emerald-400 font-bold">✓ All rounds complete.</span> Thank you for participating!</>
+              ) : (
+                <><span className="text-white font-bold">Ready?</span> Enter the game room to start your 10-minute timer.</>
+              )}
             </div>
-            <button
-              onClick={() => router.push('/game')}
-              className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-3.5 bg-gradient-to-r from-[#17D059] to-emerald-400 text-slate-950 font-black text-base rounded-xl hover:scale-105 transition-all shadow-xl shadow-[#17D059]/25 cursor-pointer"
-            >
-              Enter Round {currentRound} →
-            </button>
+            {currentRound <= 6 ? (
+              <button
+                onClick={() => router.push('/game')}
+                className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-3.5 bg-gradient-to-r from-[#17D059] to-emerald-400 text-slate-950 font-black text-base rounded-xl hover:scale-105 transition-all shadow-xl shadow-[#17D059]/25 cursor-pointer"
+              >
+                Enter Round {currentRound} →
+              </button>
+            ) : (
+              <div className="px-6 py-3 rounded-xl bg-emerald-950/50 border border-emerald-700/50 text-emerald-400 font-bold text-sm">
+                ✓ Game Completed
+              </div>
+            )}
           </div>
         </div>
       )}
