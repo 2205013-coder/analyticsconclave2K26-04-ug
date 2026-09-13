@@ -3,11 +3,12 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Lock, Users, AlertTriangle } from 'lucide-react';
+import { Lock, Users, AlertTriangle, Eye, EyeOff } from 'lucide-react';
 
 export default function TeamLogin() {
   const [teamCode, setTeamCode] = useState('');
   const [pin, setPin] = useState('');
+  const [showPin, setShowPin] = useState(false);
   const [error, setError] = useState('');
   const [sessionConflict, setSessionConflict] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -95,14 +96,22 @@ export default function TeamLogin() {
               <div className="relative">
                 <Lock size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
                 <input
-                  type="password"
+                  type={showPin ? "text" : "password"}
                   value={pin}
                   onChange={(e) => setPin(e.target.value)}
                   placeholder="Enter access code"
-                  className="w-full pl-10 pr-4 py-3 rounded-xl bg-[#0F172A] border border-slate-700 text-white placeholder-slate-600 focus:ring-2 focus:ring-[#17D059] focus:border-transparent outline-none transition-all text-center tracking-widest font-bold"
+                  className="w-full pl-10 pr-11 py-3 rounded-xl bg-[#0F172A] border border-slate-700 text-white placeholder-slate-600 focus:ring-2 focus:ring-[#17D059] focus:border-transparent outline-none transition-all text-center tracking-widest font-bold"
                   required
                   autoComplete="current-password"
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPin(!showPin)}
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 p-1 rounded-lg transition-colors cursor-pointer"
+                  title={showPin ? "Hide access code" : "Show access code"}
+                >
+                  {showPin ? <EyeOff size={16} /> : <Eye size={16} />}
+                </button>
               </div>
             </div>
 

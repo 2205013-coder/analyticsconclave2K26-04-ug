@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import {
   Target, Clock, Database, Award, CheckCircle2,
   Mic2, MapPin, Zap, ShieldAlert, Calendar, CloudSun,
-  Lock, Users, AlertTriangle, ChevronDown
+  Lock, Users, AlertTriangle, ChevronDown, Eye, EyeOff
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -17,6 +17,7 @@ export default function LandingPage() {
   const [sessionConflict, setSessionConflict] = useState(false);
   const [gameCompleted, setGameCompleted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [showPin, setShowPin] = useState(false);
   const router = useRouter();
 
   const handleLogin = async (forceLogin = false) => {
@@ -195,14 +196,22 @@ export default function LandingPage() {
                   <div className="relative">
                     <Lock size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
                     <input
-                      type="password"
+                      type={showPin ? "text" : "password"}
                       value={pin}
                       onChange={(e) => setPin(e.target.value)}
                       placeholder="Enter access code"
-                      className="w-full pl-10 pr-4 py-3 rounded-xl bg-[#0F172A] border border-slate-700 text-white placeholder-slate-600 focus:ring-2 focus:ring-[#17D059] focus:border-transparent outline-none transition-all text-center tracking-widest font-bold"
+                      className="w-full pl-10 pr-11 py-3 rounded-xl bg-[#0F172A] border border-slate-700 text-white placeholder-slate-600 focus:ring-2 focus:ring-[#17D059] focus:border-transparent outline-none transition-all text-center tracking-widest font-bold"
                       required
                       autoComplete="current-password"
                     />
+                    <button
+                      type="button"
+                      onClick={() => setShowPin(!showPin)}
+                      className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 p-1 rounded-lg transition-colors cursor-pointer"
+                      title={showPin ? "Hide access code" : "Show access code"}
+                    >
+                      {showPin ? <EyeOff size={16} /> : <Eye size={16} />}
+                    </button>
                   </div>
                 </div>
 
