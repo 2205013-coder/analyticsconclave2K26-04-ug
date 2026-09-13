@@ -116,46 +116,6 @@ export default function LandingPage() {
             <div className="absolute inset-0 bg-gradient-to-t from-[#030712] via-[#030712]/20 to-[#030712]/70" />
           </div>
 
-          {/* Floating Analytics Annotation Callouts (visible on lg+) */}
-          <div className="hidden xl:block absolute top-12 left-6 z-10 pointer-events-none">
-            <div className="text-[11px] font-bold text-slate-300 tracking-tight flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
-              Demand Identification
-            </div>
-            <ul className="text-[10px] text-slate-400 space-y-0.5 mt-1 font-mono pl-3">
-              <li>• Trend Analysis</li>
-              <li>• Audience Segmentation</li>
-              <li>• Forecasting Models</li>
-            </ul>
-          </div>
-
-          <div className="hidden xl:block absolute top-10 left-[48%] -translate-x-1/2 z-10 pointer-events-none">
-            <div className="text-[11px] font-bold text-slate-300 tracking-tight flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#17D059] animate-pulse" />
-              Event Operations
-            </div>
-            <ul className="text-[10px] text-slate-400 space-y-0.5 mt-1 font-mono pl-3">
-              <li>• Resource Allocation</li>
-              <li>• Queue Management</li>
-              <li>• Risk Analysis</li>
-              <li>• Real-time Decision Making</li>
-              <li>• Cost Optimization</li>
-            </ul>
-          </div>
-
-          <div className="hidden xl:block absolute top-36 left-[48%] -translate-x-1/2 z-10 pointer-events-none">
-            <div className="text-[11px] font-bold text-slate-300 tracking-tight flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
-              Customer &amp; Audience Insights
-            </div>
-            <ul className="text-[10px] text-slate-400 space-y-0.5 mt-1 font-mono pl-3">
-              <li>• Sentiment Analysis</li>
-              <li>• Engagement Metrics</li>
-              <li>• Attendance Prediction</li>
-              <li>• Experience Optimization</li>
-            </ul>
-          </div>
-
           {/* Left: Title + info */}
           <div className="flex-1 text-center lg:text-left relative z-10">
             <motion.div
@@ -213,9 +173,9 @@ export default function LandingPage() {
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, delay: 0.3 }}
-            className="w-full max-w-sm shrink-0"
+            className="w-full max-w-sm shrink-0 relative z-20"
           >
-            <div className="bg-[#0B1222] border border-slate-700/60 rounded-3xl p-8 shadow-2xl shadow-black/60">
+            <div className="bg-[#0B1222] border border-slate-700/60 rounded-3xl p-8 shadow-2xl shadow-black/80">
               <div className="flex items-center gap-3 mb-6">
                 <div className="p-2.5 bg-[#17D059]/10 rounded-xl">
                   <Users size={20} className="text-[#17D059]" />
