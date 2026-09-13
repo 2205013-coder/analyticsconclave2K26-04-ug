@@ -33,7 +33,7 @@ export default function LogoHeader() {
 
       {/* Game title — center */}
       <div className="absolute left-1/2 -translate-x-1/2 text-center pointer-events-none">
-        <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-0.5">Presented by Optix</div>
+        <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-0.5">UG Business Analytics Game 2026</div>
         <div className="text-sm font-black text-transparent bg-clip-text bg-gradient-to-r from-[#17D059] to-emerald-400 tracking-tight whitespace-nowrap">
           Beyond The Stage
         </div>
