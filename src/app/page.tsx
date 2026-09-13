@@ -102,27 +102,78 @@ export default function LandingPage() {
       <main className="flex-1 flex flex-col w-full z-10">
 
         {/* ===== HERO ===== */}
-        <section className="relative min-h-screen flex flex-col lg:flex-row items-center justify-center gap-12 px-6 py-16 max-w-7xl mx-auto w-full">
+        <section className="relative min-h-[calc(100vh-80px)] flex flex-col lg:flex-row items-center justify-center gap-10 lg:gap-14 px-6 py-12 lg:py-16 max-w-7xl mx-auto w-full">
+
+          {/* 3D Concert Tech Artwork Background */}
+          <div className="absolute inset-0 pointer-events-none overflow-hidden z-0 flex items-center justify-center">
+            <img
+              src="/concert-stage-hero.jpg"
+              alt="Beyond The Stage - Concert Analytics Setup"
+              className="w-full h-full object-cover object-center opacity-45 lg:opacity-65 select-none"
+            />
+            {/* Gradients to seamlessly blend image into #030712 */}
+            <div className="absolute inset-0 bg-gradient-to-r from-[#030712] via-[#030712]/30 to-[#030712]/95" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#030712] via-transparent to-[#030712]" />
+          </div>
+
+          {/* Floating Analytics Annotation Callouts (visible on lg+) */}
+          <div className="hidden xl:block absolute top-12 left-6 z-10 pointer-events-none">
+            <div className="text-[11px] font-bold text-slate-300 tracking-tight flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+              Demand Identification
+            </div>
+            <ul className="text-[10px] text-slate-400 space-y-0.5 mt-1 font-mono pl-3">
+              <li>• Trend Analysis</li>
+              <li>• Audience Segmentation</li>
+              <li>• Forecasting Models</li>
+            </ul>
+          </div>
+
+          <div className="hidden xl:block absolute top-10 left-[48%] -translate-x-1/2 z-10 pointer-events-none">
+            <div className="text-[11px] font-bold text-slate-300 tracking-tight flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#17D059] animate-pulse" />
+              Event Operations
+            </div>
+            <ul className="text-[10px] text-slate-400 space-y-0.5 mt-1 font-mono pl-3">
+              <li>• Resource Allocation</li>
+              <li>• Queue Management</li>
+              <li>• Risk Analysis</li>
+              <li>• Real-time Decision Making</li>
+              <li>• Cost Optimization</li>
+            </ul>
+          </div>
+
+          <div className="hidden xl:block absolute top-36 left-[48%] -translate-x-1/2 z-10 pointer-events-none">
+            <div className="text-[11px] font-bold text-slate-300 tracking-tight flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+              Customer &amp; Audience Insights
+            </div>
+            <ul className="text-[10px] text-slate-400 space-y-0.5 mt-1 font-mono pl-3">
+              <li>• Sentiment Analysis</li>
+              <li>• Engagement Metrics</li>
+              <li>• Attendance Prediction</li>
+              <li>• Experience Optimization</li>
+            </ul>
+          </div>
 
           {/* Left: Title + info */}
-          <div className="flex-1 text-center lg:text-left">
+          <div className="flex-1 text-center lg:text-left relative z-10">
             <motion.div
               initial={{ opacity: 0, y: -12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest bg-[#17D059]/10 border border-[#17D059]/30 text-[#17D059] mb-6"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest bg-[#17D059]/10 border border-[#17D059]/30 text-[#17D059] mb-6 shadow-lg shadow-[#17D059]/10"
             >
               🏆 UG Business Analytics Game 2026
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
+              initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.9, ease: 'easeOut' }}
+              transition={{ duration: 0.8, ease: 'easeOut' }}
               className="relative mb-5"
             >
-              <div className="absolute inset-0 bg-[#17D059] blur-[80px] opacity-15 rounded-full" />
-              <h1 className="relative text-5xl sm:text-6xl md:text-7xl xl:text-8xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-white via-emerald-100 to-emerald-400 leading-none pb-2">
+              <h1 className="text-5xl sm:text-6xl md:text-7xl xl:text-8xl font-black tracking-tight text-white leading-none pb-2 drop-shadow-[0_10px_35px_rgba(0,0,0,0.9)]">
                 Beyond<br />The Stage
               </h1>
             </motion.div>
@@ -131,9 +182,9 @@ export default function LandingPage() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.25 }}
-              className="text-base sm:text-lg text-slate-400 max-w-xl mb-8 leading-relaxed"
+              className="text-base sm:text-lg text-slate-300 max-w-xl mb-8 leading-relaxed drop-shadow-md"
             >
-              A live-entertainment forecasting challenge. Analyse <span className="text-white font-semibold">60 historical events</span>, interpret demand drivers, and predict attendance across <span className="text-[#17D059] font-semibold">6 competitive rounds</span>.
+              A live-entertainment forecasting challenge. Analyse <span className="text-white font-bold">60 historical events</span>, interpret demand drivers, and predict attendance across <span className="text-[#17D059] font-bold">6 competitive rounds</span>.
             </motion.p>
 
             {/* Quick stats */}
@@ -141,17 +192,17 @@ export default function LandingPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.4 }}
-              className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4 gap-3 max-w-md lg:max-w-none"
+              className="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-lg lg:max-w-none"
             >
               {[
-                { value: '60', label: 'Events',   color: 'text-[#17D059]' },
-                { value: '6',  label: 'Rounds',   color: 'text-cyan-400'  },
-                { value: '10m',label: '/Round',   color: 'text-amber-400' },
-                { value: '100',label: 'Max Pts',  color: 'text-purple-400'},
+                { value: '60',  label: 'EVENTS',   color: 'text-[#17D059]' },
+                { value: '6',   label: 'ROUNDS',   color: 'text-[#22d3ee]'  },
+                { value: '10m', label: '/ROUND',   color: 'text-[#fbbf24]' },
+                { value: '100', label: 'MAX PTS',  color: 'text-[#c084fc]' },
               ].map((s, i) => (
-                <div key={i} className="p-3 rounded-2xl bg-[#0B1222]/80 border border-slate-800 text-center">
-                  <div className={`text-2xl font-black ${s.color}`}>{s.value}</div>
-                  <div className="text-[10px] font-mono text-slate-400 uppercase tracking-wider mt-0.5">{s.label}</div>
+                <div key={i} className="p-3.5 sm:p-4 rounded-2xl bg-[#060D1A]/85 backdrop-blur-md border border-slate-800/80 text-center shadow-lg shadow-black/50">
+                  <div className={`text-2xl sm:text-3xl font-black ${s.color}`}>{s.value}</div>
+                  <div className="text-[10px] font-mono text-slate-400 font-bold uppercase tracking-wider mt-1">{s.label}</div>
                 </div>
               ))}
             </motion.div>
