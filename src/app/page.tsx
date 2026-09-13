@@ -105,15 +105,15 @@ export default function LandingPage() {
         <section className="relative min-h-[calc(100vh-80px)] flex flex-col lg:flex-row items-center justify-center gap-10 lg:gap-14 px-6 py-12 lg:py-16 max-w-7xl mx-auto w-full">
 
           {/* 3D Concert Tech Artwork Background */}
-          <div className="absolute inset-0 pointer-events-none overflow-hidden z-0 flex items-center justify-center">
+          <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
             <img
               src="/concert-stage-hero.jpg"
               alt="Beyond The Stage - Concert Analytics Setup"
-              className="w-full h-full object-cover object-center opacity-45 lg:opacity-65 select-none"
+              className="absolute inset-0 w-full h-full object-cover object-center opacity-70 lg:opacity-90 select-none"
             />
-            {/* Gradients to seamlessly blend image into #030712 */}
-            <div className="absolute inset-0 bg-gradient-to-r from-[#030712] via-[#030712]/30 to-[#030712]/95" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#030712] via-transparent to-[#030712]" />
+            {/* Gradients: let center show, fade left for text readability, fade right for login card */}
+            <div className="absolute inset-0 bg-gradient-to-r from-[#030712]/80 via-transparent to-[#030712]/90" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#030712] via-[#030712]/20 to-[#030712]/70" />
           </div>
 
           {/* Floating Analytics Annotation Callouts (visible on lg+) */}
