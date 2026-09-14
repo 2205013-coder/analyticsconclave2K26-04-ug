@@ -149,12 +149,6 @@ export default function TeamLogin() {
             )}
           </form>
         </div>
-
-        <div className="mt-5 text-center">
-          <Link href="/login/admin" className="block text-xs text-slate-600 hover:text-slate-400 transition-colors">
-            Admin Portal →
-          </Link>
-        </div>
       </div>
     </div>
   );

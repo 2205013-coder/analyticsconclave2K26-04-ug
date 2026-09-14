@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { Settings } from 'lucide-react';
 
 export default function Navbar() {
   return (
@@ -32,14 +31,6 @@ export default function Navbar() {
           className="bg-gradient-to-r from-[#17D059] to-[#0a8a38] text-slate-950 px-5 py-2 rounded-full font-black text-xs sm:text-sm hover:scale-105 transition-transform shadow-lg shadow-[#17D059]/20"
         >
           Enter the Arena
-        </Link>
-
-        <Link 
-          href="/login/admin"
-          className="text-slate-400 hover:text-slate-200 transition-colors ml-1 p-1.5 rounded-lg hover:bg-slate-800/50"
-          aria-label="Admin Command Center"
-        >
-          <Settings size={18} />
         </Link>
       </div>
     </nav>

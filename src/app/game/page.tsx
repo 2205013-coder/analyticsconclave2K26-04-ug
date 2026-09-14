@@ -10,7 +10,7 @@ import {
 } from 'lucide-react';
 
 
-type GamePhase = 'loading' | 'briefing' | 'prep' | 'playing' | 'review' | 'confirm' | 'result' | 'transition';
+type GamePhase = 'loading' | 'briefing' | 'prep' | 'playing' | 'review' | 'confirm' | 'result' | 'transition' | 'completed';
 
 export default function GamePage() {
   const router = useRouter();

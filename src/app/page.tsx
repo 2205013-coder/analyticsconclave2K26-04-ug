@@ -260,12 +260,6 @@ export default function LandingPage() {
                   </button>
                 )}
               </form>
-
-              <div className="mt-5 pt-4 border-t border-slate-800 text-center">
-                <Link href="/login/admin" className="text-xs text-slate-600 hover:text-slate-400 transition-colors">
-                  Admin Portal →
-                </Link>
-              </div>
             </div>
           </motion.div>
 
@@ -408,8 +402,6 @@ export default function LandingPage() {
 
       <footer className="w-full py-6 border-t border-slate-800 bg-[#070D18] text-center text-xs text-slate-500">
         Beyond The Stage · UG Business Analytics Game 2026 · Live Entertainment Forecasting Challenge
-        <span className="mx-3 text-slate-700">·</span>
-        <Link href="/login/admin" className="hover:text-slate-400 transition-colors">Admin</Link>
       </footer>
     </div>
   );
