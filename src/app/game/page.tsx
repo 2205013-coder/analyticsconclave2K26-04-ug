@@ -613,10 +613,7 @@ export default function GamePage() {
                 <textarea
                   value={reasoning}
                   onChange={e => setReasoning(e.target.value)}
-                  placeholder={`Write your analytical reasoning here. For example:
-• Historical baseline: Based on similar Artist X events in [venue type], average Basic occupancy was ~Y.
-• Variable adjustments: Promotion Level adds ~10–15% uplift. Holiday boosts demand. High competition reduces draw by ~10%.
-• Final estimate: Adjusted baseline gives Basic ≈ [your number] and Premium ≈ [your number] given Prestige [X]/5.`}
+                  placeholder="Write your analytical reasoning here..."
                   rows={5}
                   className="w-full p-4 rounded-xl bg-[#030712] border border-slate-700 text-slate-200 placeholder-slate-600 focus:ring-2 focus:ring-[#17D059] focus:border-transparent outline-none transition-all resize-none text-sm leading-relaxed"
                 />
