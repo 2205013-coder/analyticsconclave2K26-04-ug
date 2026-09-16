@@ -444,7 +444,7 @@ function BriefingContent() {
               {currentRound > 6 ? (
                 <><span className="text-emerald-400 font-bold">✓ All rounds complete.</span> Thank you for participating!</>
               ) : (
-                <><span className="text-white font-bold">Ready?</span> Enter the game room to start your 10-minute timer.</>
+                <span className="text-amber-400 font-bold">⚠️ Once you enter the round, you're locked in. You cannot exit until the round ends.</span>
               )}
             </div>
             {currentRound <= 6 ? (
