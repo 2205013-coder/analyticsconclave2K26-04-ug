@@ -236,7 +236,7 @@ export default function GamePage() {
   const isBasicValid = !isNaN(basicNum) && basicNum >= 0 && basicNum <= 50000;
   const isPremiumValid = !isNaN(premiumNum) && premiumNum >= 0 && premiumNum <= 10000;
   const isBothEntered = gaForecast.trim() !== '' && vipForecast.trim() !== '';
-  const isReasoningValid = reasoning.trim().length >= 10;
+  const isReasoningValid = reasoning.trim().length >= 100;
   const canSubmit = isBasicValid && isPremiumValid && isBothEntered;
 
   const handleReview = () => setPhase('review');
@@ -608,7 +608,7 @@ export default function GamePage() {
               <div>
                 <div className="flex justify-between items-center mb-2">
                   <label className="text-sm font-bold text-white">3. Forecast Logic &amp; Reasoning <span className="text-slate-400 font-normal">(40% Weightage)</span></label>
-                  <span className="text-xs text-slate-400">Min 10 chars</span>
+                  <span className="text-xs text-slate-400">Min 100 chars</span>
                 </div>
                 <textarea
                   value={reasoning}
