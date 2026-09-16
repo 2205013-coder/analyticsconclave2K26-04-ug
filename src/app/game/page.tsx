@@ -260,7 +260,7 @@ export default function GamePage() {
       if (!res.ok) throw new Error('Submission failed');
       // Clear localStorage timer so next round starts fresh
       clearTimerFromStorage();
-      setPhase('result');
+      setPhase(roundNumberRef.current >= 6 ? 'completed' : 'result');
     } catch (err) {
       console.error(err);
       alert('Failed to submit. Please try again.');
@@ -288,7 +288,7 @@ export default function GamePage() {
       
       if (!res.ok) throw new Error('Submission failed');
       
-      setPhase('result');
+      setPhase(roundNumber >= 6 ? 'completed' : 'result');
     } catch (err) {
       console.error(err);
       alert('Failed to submit. Please try again.');
