@@ -229,27 +229,6 @@ function BriefingContent() {
               </div>
             </Section>
 
-            <Section title="🔍 4-Step Forecasting Methodology">
-              <div className="space-y-3">
-                {[
-                  { step: '01', title: 'Filter by Artist', body: 'Go to the Historical Data tab and filter by the round\'s performing artist. Compute the average and range of Basic and Premium occupancy for that artist. This gives your baseline.' },
-                  { step: '02', title: 'Match Venue Type', body: 'Narrow down to events with the same Venue Type. This tightens your range significantly. Compare how the artist performs in that specific setting.' },
-                  { step: '03', title: 'Apply Variable Modifiers', body: 'Adjust your baseline estimate based on: Promotion Level (higher = +occupancy), Venue Prestige (higher = +Premium), Weather (Sunny = +for Open-Air), Event Day (Holiday = peak), Competing Events (High = reduce estimate).' },
-                  { step: '04', title: 'Justify & Lock In', body: 'Write your reasoning before locking numbers. Structured reasoning catches errors and earns full marks on the 40% logic component even if your final numbers aren\'t perfect.' },
-                ].map(s => (
-                  <div key={s.step} className="flex gap-4 p-4 rounded-xl bg-[#0A111F] border border-slate-800">
-                    <div className="w-8 h-8 rounded-full bg-[#17D059]/10 border border-[#17D059]/30 text-[#17D059] font-black text-xs flex items-center justify-center shrink-0">
-                      {s.step}
-                    </div>
-                    <div>
-                      <div className="font-bold text-white text-sm mb-1">{s.title}</div>
-                      <div className="text-slate-400 text-xs leading-relaxed">{s.body}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </Section>
-
             <Section title="🏆 Evaluation Rubric">
               <div className="grid grid-cols-2 gap-3 mb-3">
                 <div className="p-4 rounded-xl bg-[#17D059]/5 border border-[#17D059]/20">
@@ -288,23 +267,6 @@ function BriefingContent() {
                   </li>
                 ))}
               </ul>
-            </Section>
-
-            <Section title="💡 Strategy Tips" defaultOpen={false}>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                {[
-                  'Holiday + High Promo + Prestige 4–5 is historically the strongest attendance combination.',
-                  'Cloudy + Weekday + High Competition = lowest occupancy. Adjust your forecast down significantly.',
-                  'Indoor Hall venues show the most stable, predictable occupancy. Open-Air is more volatile.',
-                  'Premium seats at Prestige-1 venues rarely exceed 4,000 even under ideal conditions.',
-                  'Average 5–8 similar historical events for a stronger baseline rather than anchoring on one.',
-                  'Write reasoning before entering numbers — it forces structured thinking and catches errors.',
-                ].map((tip, i) => (
-                  <div key={i} className="flex gap-2 p-3 rounded-xl bg-[#0A111F] border border-slate-800 text-xs text-slate-400">
-                    <span className="text-amber-400 shrink-0">✦</span> {tip}
-                  </div>
-                ))}
-              </div>
             </Section>
 
           </div>

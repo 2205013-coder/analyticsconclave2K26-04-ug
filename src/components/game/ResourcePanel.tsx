@@ -306,17 +306,6 @@ export default function ResourcePanel() {
             </ul>
           </Section>
 
-          <Section title="💡 Strategy Tips" defaultOpen={false}>
-            <ul className="space-y-1.5 text-[10px] text-slate-400">
-              <li className="flex gap-2"><span className="text-amber-400 shrink-0">✦</span><span>Holiday + High Promotion + Prestige 4/5 = historically the highest occupancy combination.</span></li>
-              <li className="flex gap-2"><span className="text-amber-400 shrink-0">✦</span><span>Cloudy weather + Weekday + High competition is typically the lowest occupancy scenario.</span></li>
-              <li className="flex gap-2"><span className="text-amber-400 shrink-0">✦</span><span>Indoor Hall venues tend to have more stable (less volatile) occupancy than Open-Air Venues.</span></li>
-              <li className="flex gap-2"><span className="text-amber-400 shrink-0">✦</span><span>Premium seats for Prestige-1 venues rarely exceed 4,000 even in best conditions.</span></li>
-              <li className="flex gap-2"><span className="text-amber-400 shrink-0">✦</span><span>Don't anchor on one data point — average 5–8 similar historical events for a stronger baseline.</span></li>
-              <li className="flex gap-2"><span className="text-amber-400 shrink-0">✦</span><span>Write your reasoning before locking numbers — it forces structured thinking and often catches errors.</span></li>
-            </ul>
-          </Section>
-
           <div className="text-center py-2 text-[9px] text-slate-600 font-mono">
             © 2026 Optix — Operations &amp; Analytics Club · KIIT School of Management
           </div>
