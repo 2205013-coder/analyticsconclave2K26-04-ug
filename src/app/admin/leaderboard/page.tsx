@@ -16,7 +16,7 @@ export default function LeaderboardPage() {
       const data = await res.json();
       if (data.success) {
         // Sort teams by totalScore descending
-        const sortedTeams = data.teams.sort((a: any, b: any) => b.totalScore - a.totalScore);
+        const sortedTeams = data.teams.sort((a: any, b: any) => (b.totalScore * 0.6) - (a.totalScore * 0.6));
         setRankings(sortedTeams);
         setError(null);
       }
@@ -62,7 +62,7 @@ export default function LeaderboardPage() {
                 <th className="px-6 py-4 font-medium">Team Name</th>
                 <th className="px-6 py-4 font-medium">Institution</th>
                 <th className="px-6 py-4 font-medium text-center">Rounds Completed</th>
-                <th className="px-6 py-4 font-medium text-right text-lg">Total Score</th>
+                <th className="px-6 py-4 font-medium text-right text-lg">Total Score (60%)</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
@@ -82,7 +82,7 @@ export default function LeaderboardPage() {
                     <td className="px-6 py-4 font-medium text-slate-900 dark:text-white">{team.name}</td>
                     <td className="px-6 py-4 text-slate-600 dark:text-slate-400">{team.institution || '-'}</td>
                     <td className="px-6 py-4 text-center">{team._count?.submissions || 0}</td>
-                    <td className="px-6 py-4 text-right font-bold text-xl text-[#074870] dark:text-[#38bdf8]">{Math.round(team.totalScore)}</td>
+                    <td className="px-6 py-4 text-right font-bold text-xl text-[#074870] dark:text-[#38bdf8]">{Math.round(team.totalScore * 0.6)}</td>
                   </tr>
                 );
               })}
