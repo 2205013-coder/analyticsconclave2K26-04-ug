@@ -18,6 +18,19 @@ async function main() {
     },
   });
 
+  // Optix Club Admin
+  const optixHash = await hash('OPTIX@0321', 10);
+  await prisma.user.upsert({
+    where: { email: 'optixclubgame@gmail.com' },
+    update: { passwordHash: optixHash },
+    create: {
+      name: 'Optix Admin',
+      email: 'optixclubgame@gmail.com',
+      passwordHash: optixHash,
+      role: 'ADMIN',
+    },
+  });
+
   // 2. Teams — created by Admin only. No default teams seeded.
 
   // 3. Scoring Configuration (60% Accuracy, 40% Logic & Strategy)
