@@ -13,8 +13,10 @@ import {
   Trophy, 
   Megaphone,
   BookOpen,
-  Upload
+  Upload,
+  LogOut
 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 const NAV_ITEMS = [
   { href: '/admin',                    label: 'Dashboard',          icon: LayoutDashboard },
@@ -32,8 +34,18 @@ const NAV_ITEMS = [
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const router = useRouter();
 
   const currentPage = NAV_ITEMS.find(item => item.href === pathname)?.label || 'Dashboard';
+
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' });
+      router.push('/login/admin');
+    } catch {
+      router.push('/login/admin');
+    }
+  };
 
   return (
     <div className="flex h-screen bg-[#030712] text-white overflow-hidden">
@@ -69,6 +81,16 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           })}
         </nav>
 
+        {/* Logout Button */}
+        <div className="px-4 pb-4">
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-3 px-3 py-2.5 w-full rounded-lg text-red-400 hover:bg-red-900/20 hover:text-red-300 transition-colors text-sm font-medium"
+          >
+            <LogOut size={18} />
+            Logout
+          </button>
+        </div>
 
       </aside>
 
