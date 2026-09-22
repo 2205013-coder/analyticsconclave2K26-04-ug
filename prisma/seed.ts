@@ -4,21 +4,7 @@ import { hash } from 'bcryptjs';
 const prisma = new PrismaClient();
 
 async function main() {
-  const passwordHash = await hash('Admin@123', 10);
-
-  // 1. Admin Account
-  await prisma.user.upsert({
-    where: { email: 'admin@housefull.com' }, // keep email as-is for existing admin login
-    update: { passwordHash },
-    create: {
-      name: 'Game Master',
-      email: 'admin@housefull.com',
-      passwordHash,
-      role: 'ADMIN',
-    },
-  });
-
-  // Optix Club Admin
+  // 1. Primary Admin Account (Optix Club Admin)
   const optixHash = await hash('OPTIX@0321', 10);
   await prisma.user.upsert({
     where: { email: 'optixclubgame@gmail.com' },

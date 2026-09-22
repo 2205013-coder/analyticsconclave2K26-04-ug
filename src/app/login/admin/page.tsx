@@ -76,7 +76,7 @@ export default function AdminLogin() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="admin@housefull.com"
+                  placeholder="optixclubgame@gmail.com"
                   className="w-full pl-10 pr-4 py-3 rounded-lg bg-[#0F172A] border border-slate-700 text-white placeholder-slate-500 focus:ring-2 focus:ring-cyan-500 focus:border-transparent outline-none transition-all"
                   required
                 />
