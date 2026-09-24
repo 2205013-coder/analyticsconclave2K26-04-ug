@@ -45,13 +45,28 @@ export default function GamePage() {
     try { localStorage.removeItem(TIMER_LS_KEY); } catch {}
   };
 
+  // ── Retry fetch to handle Neon cold starts ──
+  const retryFetch = async (url: string, retries = 3, delay = 2000): Promise<Response> => {
+    for (let i = 0; i < retries; i++) {
+      try {
+        const res = await fetch(url);
+        if (res.ok || res.status === 401 || res.status === 404) return res;
+        if (i < retries - 1) await new Promise(r => setTimeout(r, delay));
+      } catch (err) {
+        if (i === retries - 1) throw err;
+        await new Promise(r => setTimeout(r, delay));
+      }
+    }
+    return fetch(url);
+  };
+
   useEffect(() => {
     const initGame = async () => {
       try {
         // ── Step 1: Check localStorage for instant same-device restore ──
         const saved = loadTimerFromStorage();
 
-        const res = await fetch('/api/game/status');
+        const res = await retryFetch('/api/game/status');
         if (!res.ok) throw new Error('Failed to fetch status');
         const data = await res.json();
 
@@ -118,7 +133,7 @@ export default function GamePage() {
   const fetchRoundData = async (round: number, restoredTimeLeft: number | null) => {
     try {
       roundNumberRef.current = round;
-      const res = await fetch(`/api/game/round/${round}`);
+      const res = await retryFetch(`/api/game/round/${round}`);
       if (!res.ok) throw new Error('Failed to fetch round data');
       const data = await res.json();
       setRoundData(data.round);
