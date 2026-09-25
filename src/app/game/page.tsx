@@ -640,7 +640,7 @@ export default function GamePage() {
                   { ok: isBasicValid,     label: 'Basic forecast (0–50,000)' },
                   { ok: isPremiumValid,   label: 'Premium forecast (0–10,000)' },
                   { ok: isBothEntered,   label: 'Both forecasts entered' },
-                  { ok: isReasoningValid, label: 'Reasoning entered (10+ chars)' },
+                  { ok: isReasoningValid, label: 'Reasoning entered (100+ chars)' },
                 ].map((item, i) => (
                   <div key={i} className={`flex items-center gap-2 p-2 rounded-lg border ${item.ok ? 'bg-emerald-950/30 border-emerald-800/40 text-emerald-300' : 'bg-slate-900 border-slate-800 text-slate-400'}`}>
                     <span className={`w-4 h-4 rounded-full flex items-center justify-center font-bold text-[10px] shrink-0 ${item.ok ? 'bg-[#17D059] text-slate-950' : 'bg-slate-800 text-slate-500'}`}>

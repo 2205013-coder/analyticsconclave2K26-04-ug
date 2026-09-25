@@ -168,56 +168,8 @@ export default function CaseStudyPage() {
           </div>
         </section>
 
-        {/* SECTION 2: FORECAST TARGETS */}
-        <section id="forecast-targets" className="mb-16 scroll-mt-24">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="p-2.5 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
-              <Zap size={24} />
-            </div>
-            <div>
-              <span className="text-xs font-mono text-cyan-400 uppercase font-bold tracking-wider">Section 02</span>
-              <h2 className="text-2xl sm:text-3xl font-black text-white">Forecasting Outcomes & Submission Limits</h2>
-            </div>
-          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <div className="p-8 rounded-3xl bg-[#0B1222] border border-slate-800 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-36 h-36 bg-[#17D059]/10 rounded-full blur-3xl pointer-events-none" />
-              <div className="text-xs font-mono uppercase text-[#17D059] font-bold tracking-wider mb-2">Outcome Target 01</div>
-              <h3 className="text-2xl font-black text-white mb-2">Basic / Economy Occupancy</h3>
-              <p className="text-slate-400 text-sm mb-6 leading-relaxed">
-                The expected count of general admission attendees occupying standard seating, lawn, and economy tier tickets.
-              </p>
-              <div className="p-4 rounded-xl bg-[#030712] border border-slate-800 flex items-center justify-between">
-                <span className="text-xs font-mono uppercase text-slate-400">Permitted Input Range:</span>
-                <span className="font-mono font-black text-xl text-[#17D059]">0 — 50,000 Seats</span>
-              </div>
-            </div>
 
-            <div className="p-8 rounded-3xl bg-[#0B1222] border border-slate-800 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-36 h-36 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
-              <div className="text-xs font-mono uppercase text-cyan-400 font-bold tracking-wider mb-2">Outcome Target 02</div>
-              <h3 className="text-2xl font-black text-white mb-2">Premium Occupancy</h3>
-              <p className="text-slate-400 text-sm mb-6 leading-relaxed">
-                The expected count of high-yield attendees occupying VIP, hospitality suites, and front-row premium ticket tiers.
-              </p>
-              <div className="p-4 rounded-xl bg-[#030712] border border-slate-800 flex items-center justify-between">
-                <span className="text-xs font-mono uppercase text-slate-400">Permitted Input Range:</span>
-                <span className="font-mono font-black text-xl text-cyan-400">0 — 10,000 Seats</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="p-6 rounded-2xl bg-[#0B1222] border border-slate-800">
-            <h4 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
-              <FileText className="text-amber-400" size={20} />
-              Requirement 3: Written Analytical Logic & Reasoning
-            </h4>
-            <p className="text-slate-400 text-sm leading-relaxed">
-              Every round submission requires a qualitative statement explaining the data patterns discovered, multiplier factors applied, and business rationale behind the submitted numbers.
-            </p>
-          </div>
-        </section>
 
         {/* SECTION 3: HISTORICAL DATASET */}
         <section id="historical-dataset" className="mb-16 scroll-mt-24">
